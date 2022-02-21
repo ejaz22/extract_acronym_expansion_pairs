@@ -4,6 +4,7 @@ from collections import defaultdict, Counter
 
 
 class Candidate(str):
+    
     def __init__(self, value):
         super().__init__()
         self.start = 0
@@ -66,12 +67,10 @@ class ExtractAcronymDefinitionPair:
                     close_index = open_index + 1
                     continue
 
-                # Output if conditions are met
                 start = open_index + 1
                 stop = close_index - 1
                 candidate = sent[start:stop]
 
-                # Take into account whitespace that should be removed
                 start = start + len(candidate) - len(candidate.lstrip())
                 stop = stop - len(candidate) + len(candidate.rstrip())
                 candidate = sent[start:stop]
@@ -184,7 +183,6 @@ class ExtractAcronymDefinitionPair:
         if tokens > min([length + 5, length * 2]):
             raise ValueError("did not meet min(|A|+5, |A|*2) constraint")
 
-        # Do not return definitions that contain unbalanced parentheses
         if definition.count('(') != definition.count(')'):
             raise ValueError("Unbalanced parentheses not allowed in a definition")
 
@@ -241,9 +239,12 @@ class ExtractAcronymDefinitionPair:
             return counter_abbrev_map
 
         return abbrev_map
-      
-
-if __name__ == __main___:
-    text =" I studied Bachelor in Science (B.Sc) in Delhi University (DU). I live in New Delhi whihc is an National Capital Region (NCR)"
-    obj = ExtractAcronymDefinitionPair()
-    obj.extract(doc_text=text)
+    
+    
+    if __name__ == "__main___":
+        text =" I studied in Delhi University (DU) where I studied Bachelor in Science (B.Sc). I live in New Delhi whihc is an National Capital Region (NCR)"
+        obj = ExtractAcronymDefinitionPair()
+        print(obj.extract(doc_text=text))
+        
+#3 abbreviations detected and kept (0 omitted)
+#{'B.Sc': 'Bachelor in Science', 'DU': 'Delhi University', 'NCR': 'National Capital Region'}
