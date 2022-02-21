@@ -242,8 +242,8 @@ class ExtractAcronymDefinitionPair:
 
         return abbrev_map
       
-      
-      if __name__ == __main___:
+
+if __name__ == __main___:
     text =" I studied Bachelor in Science (B.Sc) in Delhi University (DU). I live in New Delhi whihc is an National Capital Region (NCR)"
     obj = ExtractAcronymDefinitionPair()
     obj.extract(doc_text=text)
